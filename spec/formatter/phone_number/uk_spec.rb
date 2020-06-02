@@ -89,13 +89,40 @@ describe Formatter::PhoneNumber::UK do
 		context 'to correct format' do
 
 			let (:number1) {'07321890202'}
-			let (:number2) {'+44321890202'}
+			let (:number2) {'+447321890202'}
 
 			it 'should append correct prefix' do
 				no1 = formatter.formatted_number(number1)
 				no2 = formatter.formatted_number(number2)
-				expect(no1).to eq('+44321890202')
-				expect(no2).to eq('+44321890202')
+				expect(no1).to eq('+447321890202')
+				expect(no2).to eq('+447321890202')
+			end
+		end
+	end
+
+	describe 'End to end Format' do
+
+		context 'When valid' do 
+
+			let(:number) {'07321890202'}
+
+			it 'should change the prefix and return correct format' do
+				no1 = formatter.format(number)
+				expect(no1).to eq('+447321890202')
+			end
+		end
+
+		context 'When invalid' do
+
+			let(:number) {'06321890202'}
+			let(:number2) {'0783173492384'}
+
+			it 'should raise an #Invalid UK Number Format error' do
+				expect {formatter.format(number)}.to raise_error(BadFormatError, "Invalid UK Number Format")
+			end
+
+			it 'should raise an #Invalid UK Number Length error' do
+				expect {formatter.format(number2)}.to raise_error(BadFormatError, "Invalid UK Number Length")
 			end
 		end
 	end

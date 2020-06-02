@@ -9,7 +9,7 @@ module Formatter
 			def self.format(number)
 				removed_space_no = remove_space(number)
 				validated_number = is_valid(removed_space_no)
-
+				formatted_number(validated_number)
 			end
 
 			def self.remove_space(number) # check for spaces
@@ -34,7 +34,7 @@ module Formatter
 					return number
 				elsif number.start_with?(*prefixes)
 					prefixes.each {|prefix| number.delete_prefix!(prefix)}
-					full_number = number.prepend('+44')
+					full_number = number.prepend('+447')
 					return full_number
 				end
 			end
