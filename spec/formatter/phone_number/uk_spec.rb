@@ -86,5 +86,17 @@ describe Formatter::PhoneNumber::UK do
 
 	describe 'Output' do
 
+		context 'to correct format' do
+
+			let (:number1) {'07321890202'}
+			let (:number2) {'+44321890202'}
+
+			it 'should append correct prefix' do
+				no1 = formatter.formatted_number(number1)
+				no2 = formatter.formatted_number(number2)
+				expect(no1).to eq('+44321890202')
+				expect(no2).to eq('+44321890202')
+			end
+		end
 	end
 end

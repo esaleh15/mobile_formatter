@@ -8,6 +8,8 @@ module Formatter
 
 			def self.format(number)
 				removed_space_no = remove_space(number)
+				validated_number = is_valid(removed_space_no)
+
 			end
 
 			def self.remove_space(number) # check for spaces
@@ -23,6 +25,17 @@ module Formatter
 					end
 				else
 					raise BadFormatError.new('Invalid UK Number Format', 'Bad Format')
+				end
+			end
+
+			def self.formatted_number(number)
+				prefixes = ['07', '44']
+				if number.start_with?('+44')
+					return number
+				elsif number.start_with?(*prefixes)
+					prefixes.each {|prefix| number.delete_prefix!(prefix)}
+					full_number = number.prepend('+44')
+					return full_number
 				end
 			end
 		end
