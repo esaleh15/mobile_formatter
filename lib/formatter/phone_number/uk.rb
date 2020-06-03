@@ -29,17 +29,13 @@ module Formatter
 			end
 
 			def self.formatted_number(number)
-				prefixes = ['07', '44']
-				if number.start_with?('+44')
-					return number
-				elsif number.start_with?(*prefixes)
-					prefixes.each {|prefix| number.delete_prefix!(prefix)}
-					full_number = number.prepend('+447')
+				if number.start_with?(*VALID_PREFIX)
+					updated_number = number.dup
+					VALID_PREFIX.each {|prefix| updated_number.delete_prefix!(prefix)}
+					full_number = updated_number.prepend('+447')
 					return full_number
 				end
 			end
 		end
 	end
 end
-
-
